@@ -1,6 +1,7 @@
 import model.data
 import model.TD2
 import view.GUI
+import view.visualization
 
 import dash
 from dash import html
@@ -17,7 +18,7 @@ SIDEBAR_STYLE = {
 	"top": 0,
 	"left": 0,
 	"bottom": 0,
-	"width": "16rem",
+	"width": "18rem",
 	"padding": "2rem 1rem",
 	"background-color": "#f8f9fa",
 }
@@ -31,7 +32,7 @@ CONTENT_STYLE = {
 
 sidebar = html.Div(
 	[
-		html.H2("CMI ISI", className="display-4"),
+		html.H2("My Dashboard", className="display-4"),
 		html.Hr(),
 		html.P(
 			"Appels Téléphoniques", className="lead"
@@ -62,7 +63,7 @@ app.layout = html.Div([
 )
 def render_page_content(pathname):
 	if pathname == "/":
-		dropdown = view.GUI.build_dropdown_menu(model.data.get_unique_values())
+		dropdown = view.GUI.build_dropdown_menu(model.TD2.get_period())
 		graph = view.GUI.init_graph()
 		return [
 			html.Div([
@@ -94,8 +95,8 @@ def render_page_content(pathname):
     Output("bar-chart", "figure"),
     [Input("dropdown", "value")])
 def update_bar_chart(value):
-    sub_df, attributes = model.data.extract_df(value)
-    return view.GUI.build_figure(sub_df, attributes)
+    data = model.TD2.agg_data
+    return view.visualization.build_figure(data,value)
 
 @app.callback(
     Output('edit-message', 'children'),

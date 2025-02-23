@@ -55,7 +55,7 @@ def aux_agreger(data):
     df['Week'] = df['Date'].dt.isocalendar().week
 
     return df
-    
+
 def aggregate_data(data):
     # Appliquer la fonction aux_agreger pour préparer les données
     df = aux_agreger(data)
@@ -81,11 +81,14 @@ def aggregate_data(data):
 
     return daily_aggregation, weekly_aggregation, time_of_day_aggregation
 
-
 path = 'model/appels_tel.csv'
 data = charger_donnees(path)
-daily_agg, weekly_agg, time_of_day_agg = aggregate_data(data)
+agg_data = aux_agreger(data)
 
 select_feature = 'Calling_IMEI'
+
+def get_period():
+    return ["Matin","Après_midi","Soiree"]
+
 def get_unique_values_appels():
     return data[select_feature].unique()

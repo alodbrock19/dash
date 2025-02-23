@@ -20,5 +20,5 @@ def update_bar_chart(value):
     sub_df, attributes = model.data.extract_df(value)
     return view.GUI.build_figure(sub_df, attributes)
 
-if __main__
-app.run_server(debug=True)
+if __name__=='__main__':
+	app.run_server(debug=True)
